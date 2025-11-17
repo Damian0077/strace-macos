@@ -31,9 +31,16 @@ nix profile install github:Mic92/strace-macos
 strace-macos requires macOS system Python (has LLDB bindings):
 
 ```bash
+# Install directly from GitHub
+/usr/bin/python3 -m pip install --user git+https://github.com/Mic92/strace-macos
+
+# Then run (if ~/Library/Python/3.x/bin is in PATH)
+strace ls
+
+# Or run directly from repository without installing
 git clone https://github.com/Mic92/strace-macos
 cd strace-macos
-/usr/bin/python3 -m pip install --user -e .
+/usr/bin/python3 -m strace_macos ls
 ```
 
 ## Usage

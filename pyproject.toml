@@ -6,7 +6,7 @@ requires-python = ">=3.9"
 dependencies = []
 
 [project.scripts]
-strace-macos = "strace_macos.__main__:main"
+strace = "strace_macos.__main__:main"
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
