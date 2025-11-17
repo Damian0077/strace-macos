@@ -24,9 +24,6 @@ nix run github:Mic92/strace-macos -- ls
 
 # Install to profile
 nix profile install github:Mic92/strace-macos
-
-# Development shell
-nix develop
 ```
 
 ### Manual Installation
