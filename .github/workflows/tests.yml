@@ -1,0 +1,31 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, ci]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-macos:
+    name: macOS ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-13
+            arch: x86_64
+          - os: macos-latest
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile test fixtures
+        run: |
+          cd tests/fixtures
+          clang -o test_executable test_executable.c
+
+      - name: Run tests
+        run: /usr/bin/python3 run_tests.py -v
