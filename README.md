@@ -76,7 +76,8 @@ strace -c ls
 ## Requirements
 
 - macOS 12+ (Monterey or later)
-- Apple Silicon (ARM64) or Intel (x86_64)
+- Apple Silicon (ARM64) - **primary platform**
+- Intel (x86_64) - **work in progress**
 - Xcode Command Line Tools (for LLDB)
 - System Python (`/usr/bin/python3`)
 
