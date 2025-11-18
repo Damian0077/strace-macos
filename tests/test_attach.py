@@ -112,9 +112,10 @@ class TestAttach(StraceTestCase):
             syscalls = helpers.json_lines(output_file)
             syscall_names = [sc["syscall"] for sc in syscalls]
 
-            # Verify network syscalls
-            assert "socket" in syscall_names, "Should capture socket syscall"
-            assert "connect" in syscall_names, "Should capture connect syscall"
+            # Verify network syscalls (--network-loop uses socketpair, not socket/connect)
+            assert "socketpair" in syscall_names, "Should capture socketpair syscall"
+            assert "sendto" in syscall_names, "Should capture sendto syscall"
+            assert "shutdown" in syscall_names, "Should capture shutdown syscall"
         finally:
             # Ensure process is cleaned up
             if proc.poll() is None:
