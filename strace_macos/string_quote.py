@@ -19,7 +19,7 @@ def is_printable(c: int) -> bool:
     return 0x20 <= c < 0x7F  # Space (32) through ~ (126)
 
 
-def quote_string(data: bytes, max_length: int = 32) -> str:
+def quote_string(data: bytes, max_length: int = 32) -> str:  # noqa: C901
     """Quote and escape a byte string for safe terminal output.
 
     This function implements string quoting similar to strace:
@@ -61,14 +61,13 @@ def quote_string(data: bytes, max_length: int = 32) -> str:
         # Check if printable
         elif is_printable(byte):
             result.append(chr(byte))
+        # Non-printable: use octal escape
+        # Use 3-digit octal if next char is a digit, otherwise minimal
+        elif i + 1 < len(display_data) and ord("0") <= display_data[i + 1] <= ord("7"):
+            # Need full 3-digit octal to avoid ambiguity
+            result.append(f"\\{byte:03o}")
         else:
-            # Non-printable: use octal escape
-            # Use 3-digit octal if next char is a digit, otherwise minimal
-            if i + 1 < len(display_data) and ord("0") <= display_data[i + 1] <= ord("7"):
-                # Need full 3-digit octal to avoid ambiguity
-                result.append(f"\\{byte:03o}")
-            else:
-                # Can use minimal octal representation
-                result.append(f"\\{byte:o}")
+            # Can use minimal octal representation
+            result.append(f"\\{byte:o}")
 
     return "".join(result) + suffix
