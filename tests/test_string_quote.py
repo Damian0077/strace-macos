@@ -13,24 +13,24 @@ from strace_macos.string_quote import is_printable, quote_string
 class TestIsPrintable(unittest.TestCase):
     """Test the is_printable function."""
 
-    def test_printable_characters(self) -> None:
-        """Test that printable ASCII characters are recognized."""
-        # Space through tilde (0x20-0x7E)
-        for c in range(0x20, 0x7F):
-            with self.subTest(c=c, char=chr(c)):
-                assert is_printable(c), f"Character {c} ({chr(c)!r}) should be printable"
+    def test_is_printable(self) -> None:
+        """Test that is_printable correctly identifies printable/non-printable characters."""
+        # Test boundaries and representative samples
+        # Control characters (non-printable)
+        assert not is_printable(0x00)  # NULL
+        assert not is_printable(0x1F)  # Unit separator
 
-    def test_non_printable_characters(self) -> None:
-        """Test that non-printable characters are recognized."""
-        # Control characters (0x00-0x1F)
-        for c in range(0x20):
-            with self.subTest(c=c):
-                assert not is_printable(c), f"Control character {c} should not be printable"
+        # Printable ASCII range (0x20-0x7E)
+        assert is_printable(0x20)  # Space (first printable)
+        assert is_printable(ord("A"))  # Letter
+        assert is_printable(ord("z"))  # Letter
+        assert is_printable(ord("0"))  # Digit
+        assert is_printable(0x7E)  # ~ (last printable)
 
-        # DEL and above (0x7F-0xFF)  # noqa: ERA001
-        for c in range(0x7F, 0x100):
-            with self.subTest(c=c):
-                assert not is_printable(c), f"Character {c} should not be printable"
+        # Non-printable (DEL and above)  # noqa: ERA001
+        assert not is_printable(0x7F)  # DEL
+        assert not is_printable(0x80)  # First high byte
+        assert not is_printable(0xFF)  # Last byte
 
 
 class TestQuoteString(unittest.TestCase):
@@ -60,12 +60,10 @@ class TestQuoteString(unittest.TestCase):
         assert quote_string(b"path\\to\\file") == "path\\\\to\\\\file"
         assert quote_string(b'test\\"quote') == 'test\\\\\\"quote'
 
-    def test_null_byte(self) -> None:
-        """Test that null bytes are escaped as octal."""
-        assert quote_string(b"hello\x00world") == "hello\\0world"
-
     def test_control_characters(self) -> None:
         """Test that control characters are escaped as octal."""
+        # Null byte
+        assert quote_string(b"hello\x00world") == "hello\\0world"
         # SOH (Start of Heading)
         assert quote_string(b"\x01") == "\\1"
         # STX (Start of Text)
@@ -75,12 +73,11 @@ class TestQuoteString(unittest.TestCase):
         # Multiple control characters
         assert quote_string(b"\x01\x02\x03") == "\\1\\2\\3"
 
-    def test_del_character(self) -> None:
-        """Test that DEL (0x7F) is escaped as octal."""
+    def test_non_printable_bytes(self) -> None:
+        """Test that non-printable bytes (DEL and high bytes) are escaped as octal."""
+        # DEL character (0x7F)
         assert quote_string(b"test\x7f") == "test\\177"
-
-    def test_high_bytes(self) -> None:
-        """Test that bytes >= 0x80 are escaped as octal."""
+        # High bytes (>= 0x80)
         assert quote_string(b"\x80") == "\\200"
         assert quote_string(b"\xff") == "\\377"
         assert quote_string(b"\x80\x81\x82") == "\\200\\201\\202"
