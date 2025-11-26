@@ -137,12 +137,37 @@ class StructArg(SyscallArg):
 
         field_strs = []
         for name, value in self.fields.items():
-            if isinstance(value, str):
+            if isinstance(value, list):
+                # Format list of dicts as [{key=val, ...}, ...]
+                formatted_list = self._format_list(value)
+                field_strs.append(f"{name}={formatted_list}")
+            elif isinstance(value, str):
                 field_strs.append(f"{name}={value}")
             else:
                 field_strs.append(f"{name}={value}")
 
         return "{" + ", ".join(field_strs) + "}"
+
+    def _format_list(self, lst: list) -> str:
+        """Format a list of items (usually dicts) for text output."""
+        if not lst:
+            return "[]"
+
+        formatted_items = []
+        for item in lst:
+            if isinstance(item, dict):
+                # Format dict as {key=val, key=val, ...}
+                item_strs = []
+                for k, v in item.items():
+                    if isinstance(v, str) and v not in {"?", "NULL"}:
+                        item_strs.append(f'{k}="{v}"')
+                    else:
+                        item_strs.append(f"{k}={v}")
+                formatted_items.append("{" + ", ".join(item_strs) + "}")
+            else:
+                formatted_items.append(str(item))
+
+        return "[" + ", ".join(formatted_items) + "]"
 
 
 class BufferArg(SyscallArg):
@@ -231,7 +256,8 @@ class StructArrayArg(SyscallArg):
                 # Dictionary with fields - format each field
                 field_strs = []
                 for key, value in item.items():
-                    if isinstance(value, str) and value != "?":
+                    # For text output, add quotes around string values
+                    if isinstance(value, str) and value not in {"?", "NULL"}:
                         field_strs.append(f'{key}="{value}"')
                     else:
                         field_strs.append(f"{key}={value}")
@@ -260,6 +286,25 @@ class SkipArg(SyscallArg):
     def __str__(self) -> str:
         """Return empty string (should be filtered out before display)."""
         return ""
+
+
+class UuidArg(SyscallArg):
+    """UUID argument (16-byte identifier shown in standard format).
+
+    Displays without quotes like: A1B2C3D4-E5F6-7890-ABCD-EF1234567890
+    """
+
+    def __init__(self, uuid_str: str) -> None:
+        """Initialize a UUID argument.
+
+        Args:
+            uuid_str: UUID in standard format (XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX)
+        """
+        self.uuid_str = uuid_str
+
+    def __str__(self) -> str:
+        """Return UUID string without quotes."""
+        return self.uuid_str
 
 
 class IntPtrArg(SyscallArg):
